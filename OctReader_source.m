@@ -1,4 +1,4 @@
-classdef OctReader_exported < matlab.apps.AppBase
+classdef OctReader_source < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -300,7 +300,7 @@ classdef OctReader_exported < matlab.apps.AppBase
         function LoadButtonPushed(app, event)
 
             wholeEyeDataPath = 'C:\Users\TeleOCT\Documents\Whole Eye Data';
-            [fileName, pathName] = uigetfile({'*.npy','*.dicom'}, 'Pick .npy or .dicom file...', wholeEyeDataPath);
+            [fileName, pathName] = uigetfile({'*.npy','*.dcm'}, 'Pick .npy or .dicom file...', wholeEyeDataPath);
             
             app.OutputTextArea.Value = "Loading...";
             drawnow()
@@ -308,7 +308,7 @@ classdef OctReader_exported < matlab.apps.AppBase
             [fp, fn, ext] = fileparts(fileName);
             if isequal(ext, '.npy')
                 app.Data = mat2gray(single(OctReader.readNPY([pathName,fileName]))); % B-scans of phantom
-            elseif isequal(ext, '.dicom')
+            elseif isequal(ext, '.dcm')
                 app.DicomInfo = dicominfo([pathName,fileName]);
                 app.Data = dicomread([pathName,fileName]);
             else
@@ -564,7 +564,7 @@ classdef OctReader_exported < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = OctReader_exported
+        function app = OctReader_source
 
             % Create UIFigure and components
             createComponents(app)
