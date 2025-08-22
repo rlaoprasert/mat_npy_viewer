@@ -310,7 +310,7 @@ classdef OctReader_source < matlab.apps.AppBase
                 app.Data = mat2gray(single(OctReader.readNPY([pathName,fileName]))); % B-scans of phantom
             elseif isequal(ext, '.dcm')
                 app.DicomInfo = dicominfo([pathName,fileName]);
-                app.Data = dicomread([pathName,fileName]);
+                app.Data = squeeze(dicomread([pathName,fileName]));
             else
                 app.OutputTextArea.Value = "Load failed";
                 return
